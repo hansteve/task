@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wshop.dao.MarketValueMapper" >
+  <resultMap id="BaseResultMap" type="com.wshop.model.MarketValue" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="mid" property="mid" jdbcType="INTEGER" />
+    <result column="uid" property="uid" jdbcType="INTEGER" />
+    <result column="year" property="year" jdbcType="INTEGER" />
+    <result column="month" property="month" jdbcType="INTEGER" />
+    <result column="market" property="market" jdbcType="DECIMAL" />
+    <result column="team_market" property="teamMarket" jdbcType="DECIMAL" />
+    <result column="person_money" property="personMoney" jdbcType="DECIMAL" />
+    <result column="team_money" property="teamMoney" jdbcType="DECIMAL" />
+    <result column="leader_money" property="leaderMoney" jdbcType="DECIMAL" />
+    <result column="total_money" property="totalMoney" jdbcType="DECIMAL" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="add_time" property="addTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, mid, uid, year, month, market, team_market, person_money, team_money, leader_money, 
+    total_money, status, add_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from hc_market_value
+    where id = #{id,jdbcType=LONG}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from hc_market_value
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.wshop.model.MarketValue" >
+    insert into hc_market_value (id, mid, uid, 
+      year, month, market, 
+      team_market, person_money, team_money, 
+      leader_money, total_money, status, 
+      add_time)
+    values (#{id,jdbcType=INTEGER}, #{mid,jdbcType=INTEGER}, #{uid,jdbcType=INTEGER}, 
+      #{year,jdbcType=INTEGER}, #{month,jdbcType=INTEGER}, #{market,jdbcType=DECIMAL}, 
+      #{teamMarket,jdbcType=DECIMAL}, #{personMoney,jdbcType=DECIMAL}, #{teamMoney,jdbcType=DECIMAL}, 
+      #{leaderMoney,jdbcType=DECIMAL}, #{totalMoney,jdbcType=DECIMAL}, #{status,jdbcType=INTEGER}, 
+      #{addTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wshop.model.MarketValue" >
+    insert into hc_market_value
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="mid != null" >
+        mid,
+      </if>
+      <if test="uid != null" >
+        uid,
+      </if>
+      <if test="year != null" >
+        year,
+      </if>
+      <if test="month != null" >
+        month,
+      </if>
+      <if test="market != null" >
+        market,
+      </if>
+      <if test="teamMarket != null" >
+        team_market,
+      </if>
+      <if test="personMoney != null" >
+        person_money,
+      </if>
+      <if test="teamMoney != null" >
+        team_money,
+      </if>
+      <if test="leaderMoney != null" >
+        leader_money,
+      </if>
+      <if test="totalMoney != null" >
+        total_money,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="addTime != null" >
+        add_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="mid != null" >
+        #{mid,jdbcType=INTEGER},
+      </if>
+      <if test="uid != null" >
+        #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="year != null" >
+        #{year,jdbcType=INTEGER},
+      </if>
+      <if test="month != null" >
+        #{month,jdbcType=INTEGER},
+      </if>
+      <if test="market != null" >
+        #{market,jdbcType=DECIMAL},
+      </if>
+      <if test="teamMarket != null" >
+        #{teamMarket,jdbcType=DECIMAL},
+      </if>
+      <if test="personMoney != null" >
+        #{personMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="teamMoney != null" >
+        #{teamMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="leaderMoney != null" >
+        #{leaderMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="totalMoney != null" >
+        #{totalMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="addTime != null" >
+        #{addTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wshop.model.MarketValue" >
+    update hc_market_value
+    <set >
+      <if test="mid != null" >
+        mid = #{mid,jdbcType=INTEGER},
+      </if>
+      <if test="uid != null" >
+        uid = #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="year != null" >
+        year = #{year,jdbcType=INTEGER},
+      </if>
+      <if test="month != null" >
+        month = #{month,jdbcType=INTEGER},
+      </if>
+      <if test="market != null" >
+        market = #{market,jdbcType=DECIMAL},
+      </if>
+      <if test="teamMarket != null" >
+        team_market = #{teamMarket,jdbcType=DECIMAL},
+      </if>
+      <if test="personMoney != null" >
+        person_money = #{personMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="teamMoney != null" >
+        team_money = #{teamMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="leaderMoney != null" >
+        leader_money = #{leaderMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="totalMoney != null" >
+        total_money = #{totalMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="addTime != null" >
+        add_time = #{addTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wshop.model.MarketValue" >
+    update hc_market_value
+    set mid = #{mid,jdbcType=INTEGER},
+      uid = #{uid,jdbcType=INTEGER},
+      year = #{year,jdbcType=INTEGER},
+      month = #{month,jdbcType=INTEGER},
+      market = #{market,jdbcType=DECIMAL},
+      team_market = #{teamMarket,jdbcType=DECIMAL},
+      person_money = #{personMoney,jdbcType=DECIMAL},
+      team_money = #{teamMoney,jdbcType=DECIMAL},
+      leader_money = #{leaderMoney,jdbcType=DECIMAL},
+      total_money = #{totalMoney,jdbcType=DECIMAL},
+      status = #{status,jdbcType=INTEGER},
+      add_time = #{addTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

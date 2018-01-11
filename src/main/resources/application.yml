@@ -1,0 +1,54 @@
+server:
+  port: 8080
+  session:
+    timeout: 10
+  tomcat:
+    uri-encoding: utf-8
+
+#  language: @language@
+#  contextPath: /cn
+#  tomcat:
+#    remote_ip_header: x-forwarded-for
+#    protocol_header: x-forwarded-proto
+#    port-header: X-Forwarded-Port
+#  use-forward-headers: true
+
+spring:
+  application:
+    name: front
+  jackson:
+    serialization:
+      indent_output: true
+
+  # 数据源
+  datasource:
+      username: root
+      password: 123456
+      driverClassName: com.mysql.jdbc.Driver
+      type: com.alibaba.druid.pool.DruidDataSource
+      url: jdbc:mysql://127.0.0.1:3306/wshop?useUnicode=true&characterEncoding=UTF8&zeroDateTimeBehavior=convertToNull&autoReconnect=true&transformedBitIsBoolean=true&useSSL=false&serverTimezone=UTC
+
+ # 静态文件请求匹配方式
+  mvc:
+    static-path-pattern: /**
+
+# 修改默认的静态寻址资源目录
+  resources:
+    static-locations: classpath:/templates/,classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/
+
+  thymeleaf:
+    cache: false
+    check-template-location: true
+    content-type: text/html
+    enabled: true
+    encoding: UTF-8
+    mode: HTML5
+    prefix: classpath:/templates/
+    suffix: .html
+
+#mybatis
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+
+
+
