@@ -14,12 +14,12 @@ import javax.annotation.Resource;
 @Service
 public class MoneyRecordServiceImpl implements MoneyRecordService {
 
-   /* @Autowired
+     @Autowired
     MoneyRecordMapper moneyRecordDao;
-*/
+
     @Override
     public void addMoneyRecord(MoneyRecord moneyRecord) {
-       // moneyRecordDao.addMoneyRecord(moneyRecord);
+        moneyRecordDao.addMoneyRecord(moneyRecord);
     }
 
    /* @Override

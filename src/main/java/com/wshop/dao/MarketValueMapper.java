@@ -4,6 +4,7 @@ import com.wshop.model.MarketValue;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.math.BigDecimal;
+import java.util.Map;
 
 @Mapper
 public interface MarketValueMapper {
@@ -19,9 +20,9 @@ public interface MarketValueMapper {
 
    // int updateByPrimaryKey(MarketValue record);
 
-    void  updateMarketValueByUser(int uid,BigDecimal money);
+    void  updateMarketValueByUser(Map<String, Object> map);
 
-    void updateTeamMarketValueByUser(int uid, BigDecimal team_money);
+    void updateTeamMarketValueByUser(Map<String, Object> map);
 
     MarketValue getNowMarketValueByUser(int uid);
 }

@@ -1,7 +1,9 @@
 package com.wshop.dao;
 
 import com.wshop.model.MoneyRecord;
+import org.apache.ibatis.annotations.Mapper;
 
+@Mapper
 public interface MoneyRecordMapper {
   //  int deleteByPrimaryKey(Integer id);
 

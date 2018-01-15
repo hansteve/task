@@ -78,7 +78,7 @@ public class OrderTask {
      * @param username
      * @param orderId
      */
-    private void personalMoney(Integer mid,Integer uid,BigDecimal money,String username,String orderId){
+    private void personalMoney(int mid,int uid,BigDecimal money,String username,String orderId){
         MarketValue nowMarketValue = marketValueService.getNowMarketValueByUser(uid);
 
         if(nowMarketValue == null){

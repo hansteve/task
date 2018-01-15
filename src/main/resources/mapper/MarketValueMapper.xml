@@ -186,16 +186,16 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
 
-  <update id="updateMarketValueByUser" parameterType="com.wshop.model.MarketValue" >
+  <update id="updateMarketValueByUser" parameterType="java.util.Map">
     update hc_market_value
-    set  market = #{market,jdbcType=DECIMAL}
-    where uid = #{uid,jdbcType=INTEGER}
+    set  market = #{market_money,jdbcType=DECIMAL}
+    where uid = #{uid,jdbcType=INTEGER} AND year = #{year,jdbcType=INTEGER} AND month=#{month,jdbcType=INTEGER}
   </update>
 
-  <update id="updateTeamMarketValueByUser" parameterType="com.wshop.model.MarketValue" >
+  <update id="updateTeamMarketValueByUser" parameterType="java.util.Map" >
     update hc_market_value
-    set  team_market = #{teamMarket,jdbcType=DECIMAL},
-    where uid = #{uid,jdbcType=INTEGER}
+    set  team_market = #{team_money,jdbcType=DECIMAL}
+    where uid = #{uid,jdbcType=INTEGER}  AND year = #{year,jdbcType=INTEGER} AND month=#{month,jdbcType=INTEGER}
   </update>
 
   <select id="getNowMarketValueByUser" resultMap="BaseResultMap" parameterType="java.lang.Integer" >

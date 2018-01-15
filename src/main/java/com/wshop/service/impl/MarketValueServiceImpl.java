@@ -8,7 +8,9 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * User: han
@@ -27,13 +29,23 @@ public class MarketValueServiceImpl implements MarketValueService{
     }*/
 
     @Override
-    public void updateMarketValueByUser(Integer uid,BigDecimal money,long year,long month) {
-         marketValueDAO.updateMarketValueByUser(uid, money);
+    public void updateMarketValueByUser(int uid,BigDecimal market_money,long year,long month) {
+         Map<String, Object> map = new HashMap<String, Object>();
+         map.put("uid", uid);
+         map.put("market_money", market_money);
+         map.put("year", year);
+         map.put("month", month);
+         marketValueDAO.updateMarketValueByUser(map);
     }
 
     @Override
-    public void updateTeamMarketValueByUser(Integer uid, BigDecimal team_money, long year, long month) {
-        marketValueDAO.updateTeamMarketValueByUser(uid, team_money);
+    public void updateTeamMarketValueByUser(int uid, BigDecimal team_money, long year, long month) {
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("uid", uid);
+        map.put("team_money", team_money);
+        map.put("year", year);
+        map.put("month", month);
+        marketValueDAO.updateTeamMarketValueByUser(map);
     }
 
    /* @Override
@@ -67,7 +79,7 @@ public class MarketValueServiceImpl implements MarketValueService{
     }*/
 
     @Override
-    public MarketValue getNowMarketValueByUser(Integer uid) {
+    public MarketValue getNowMarketValueByUser(int uid) {
         return marketValueDAO.getNowMarketValueByUser(uid);
     }
 
