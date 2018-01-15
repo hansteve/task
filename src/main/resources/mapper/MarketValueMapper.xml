@@ -20,11 +20,11 @@
     id, mid, uid, year, month, market, team_market, person_money, team_money, leader_money, 
     total_money, status, add_time
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
     from hc_market_value
-    where id = #{id,jdbcType=LONG}
+    where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from hc_market_value
@@ -185,4 +185,23 @@
       add_time = #{addTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <update id="updateMarketValueByUser" parameterType="com.wshop.model.MarketValue" >
+    update hc_market_value
+    set  market = #{market,jdbcType=DECIMAL}
+    where uid = #{uid,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateTeamMarketValueByUser" parameterType="com.wshop.model.MarketValue" >
+    update hc_market_value
+    set  team_market = #{teamMarket,jdbcType=DECIMAL},
+    where uid = #{uid,jdbcType=INTEGER}
+  </update>
+
+  <select id="getNowMarketValueByUser" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from hc_market_value
+    where uid = #{uid,jdbcType=INTEGER}
+  </select>
 </mapper>

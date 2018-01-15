@@ -3,6 +3,7 @@ package com.wshop.service.impl;
 import com.wshop.model.MoneyRecord;
 import com.wshop.dao.MoneyRecordMapper;
 import com.wshop.service.MoneyRecordService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -13,16 +14,16 @@ import javax.annotation.Resource;
 @Service
 public class MoneyRecordServiceImpl implements MoneyRecordService {
 
-    @Resource
-    MoneyRecordMapper moneyCountDAO;
-
+   /* @Autowired
+    MoneyRecordMapper moneyRecordDao;
+*/
     @Override
     public void addMoneyRecord(MoneyRecord moneyRecord) {
-        moneyCountDAO.insert(moneyRecord);
+       // moneyRecordDao.addMoneyRecord(moneyRecord);
     }
 
-    @Override
+   /* @Override
     public void deleteMoneyRecord(MoneyRecord moneyRecord) {
         moneyCountDAO.deleteByPrimaryKey(moneyRecord.getId());
-    }
+    }*/
 }

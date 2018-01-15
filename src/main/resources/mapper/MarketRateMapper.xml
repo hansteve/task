@@ -17,7 +17,7 @@
     from hc_market_rate
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+  <!--<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from hc_market_rate
     where id = #{id,jdbcType=INTEGER}
   </delete>
@@ -89,11 +89,13 @@
       performance_to = #{performanceTo,jdbcType=DECIMAL},
       percent = #{percent,jdbcType=DECIMAL}
     where id = #{id,jdbcType=INTEGER}
-  </update>
-  <select id="getMarketRateByUser" parameterMap="BaseResultMap" parameterType="java.lang.Long">
+  </update>-->
+
+  <select id="getMarketRateByUser" resultMap="BaseResultMap" parameterType="java.lang.Integer">
     select
     <include refid="Base_Column_List" />
     from hc_market_rate
-    where mid = #{mid,jdbcType=LONG}
+    where mid = #{mid,jdbcType=INTEGER}
   </select>
+
 </mapper>

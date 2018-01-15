@@ -15,7 +15,7 @@
   <sql id="Base_Column_List" >
     id, uid, user_name, orderId, change_flag, type, money, remark, add_time
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+  <!--<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
     from hc_money_record
@@ -138,4 +138,15 @@
       add_time = #{addTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
+-->
+  <insert id="addMoneyRecord" parameterType="com.wshop.model.MoneyRecord" >
+    insert into hc_money_record (id, uid, user_name,
+    orderId, change_flag, type,
+    money, remark, add_time
+    )
+    values (#{id,jdbcType=INTEGER}, #{uid,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR},
+    #{orderid,jdbcType=VARCHAR}, #{changeFlag,jdbcType=CHAR}, #{type,jdbcType=INTEGER},
+    #{money,jdbcType=DECIMAL}, #{remark,jdbcType=VARCHAR}, #{addTime,jdbcType=TIMESTAMP}
+    )
+  </insert>
 </mapper>

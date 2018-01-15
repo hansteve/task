@@ -7,18 +7,18 @@ import java.util.List;
 
 @Mapper
 public interface MarketRateMapper {
-    int deleteByPrimaryKey(Integer id);
+  //  int deleteByPrimaryKey(Integer id);
 
-    int insert(MarketRate record);
+   // int insert(MarketRate record);
 
-    int insertSelective(MarketRate record);
+  //  int insertSelective(MarketRate record);
 
-    MarketRate selectByPrimaryKey(Integer id);
+  //  MarketRate selectByPrimaryKey(Integer id);
 
-    int updateByPrimaryKeySelective(MarketRate record);
+   // int updateByPrimaryKeySelective(MarketRate record);
 
-    int updateByPrimaryKey(MarketRate record);
+  //  int updateByPrimaryKey(MarketRate record);
 
-    List<MarketRate> getMarketRateByUser(long mid);
+    List<MarketRate> getMarketRateByUser(Integer mid);
 
 }

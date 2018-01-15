@@ -3,6 +3,7 @@ package com.wshop.service.impl;
 import com.wshop.model.MarketValue;
 import com.wshop.dao.MarketValueMapper;
 import com.wshop.service.MarketValueService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -17,7 +18,7 @@ import java.util.List;
 @Service
 public class MarketValueServiceImpl implements MarketValueService{
 
-    @Resource
+    @Autowired
     MarketValueMapper marketValueDAO;
 
   /*  @Override
@@ -26,12 +27,12 @@ public class MarketValueServiceImpl implements MarketValueService{
     }*/
 
     @Override
-    public void updateMarketValueByUser(long uid,BigDecimal money,long year,long month) {
+    public void updateMarketValueByUser(Integer uid,BigDecimal money,long year,long month) {
          marketValueDAO.updateMarketValueByUser(uid, money);
     }
 
     @Override
-    public void updateTeamMarketValueByUser(long uid, BigDecimal team_money, long year, long month) {
+    public void updateTeamMarketValueByUser(Integer uid, BigDecimal team_money, long year, long month) {
         marketValueDAO.updateTeamMarketValueByUser(uid, team_money);
     }
 
@@ -66,7 +67,7 @@ public class MarketValueServiceImpl implements MarketValueService{
     }*/
 
     @Override
-    public MarketValue getNowMarketValueByUser(long uid) {
+    public MarketValue getNowMarketValueByUser(Integer uid) {
         return marketValueDAO.getNowMarketValueByUser(uid);
     }
 

@@ -12,11 +12,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
+
 /**
  * Created by lujun.chen on 2017/3/13.
  */
-//@Service(value = "cityService")
-@Service
+@Service(value = "cityService")
 public class CityServiceImpl implements CityService {
 
   @Autowired

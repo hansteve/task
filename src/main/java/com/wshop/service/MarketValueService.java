@@ -16,9 +16,9 @@ public interface MarketValueService {
 
  //   public List<MarketValue> getBeforeMarketValueAll(long year, long month, int status);
 
-    public void updateMarketValueByUser(long uid, BigDecimal money, long year, long month);
+    public void updateMarketValueByUser(Integer uid, BigDecimal money, long year, long month);
 
-    public void updateTeamMarketValueByUser(long uid, BigDecimal team_money, long year, long month);
+    public void updateTeamMarketValueByUser(Integer uid, BigDecimal team_money, long year, long month);
 
 /*    public void updatePersonMoneyByUser(long uid, double person_money, long year, long month);
 
@@ -32,7 +32,7 @@ public interface MarketValueService {
 
   //  public MarketValue getMarketValueByUser(long uid, int year, int month);
 
-    public MarketValue getNowMarketValueByUser(long uid);
+    public MarketValue getNowMarketValueByUser(Integer uid);
 
  //   public List<MarketValue> getUserMarketValue(long uid, long year, long month);
 

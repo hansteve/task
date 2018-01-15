@@ -7,7 +7,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 /**
  * Created by lujun.chen on 2017/3/10.
  */
-//@EnableScheduling
+@EnableScheduling
 @SpringBootApplication
 public class TaskApplication {
 

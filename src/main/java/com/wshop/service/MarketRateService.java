@@ -13,7 +13,7 @@ import java.util.List;
  */
 public interface MarketRateService {
 
-    public List<MarketRate> getMarketRateByUser(long mid);
+    public List<MarketRate> getMarketRateByUser(Integer mid);
 
      public List<MarketRate> getDefaultMarketRate();
 }

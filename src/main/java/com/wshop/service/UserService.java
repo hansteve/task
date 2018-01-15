@@ -15,11 +15,11 @@ public interface UserService {
 
     public User getUserById(Integer id);
 
-    public User getParentUserById(long id);
+ /*   public User getParentUserById(long id);
 
     public void updateUserMoneyById(long id, double money);
 
-    public List<User> getTeamUser(long uid);
+    public List<User> getTeamUser(long uid);*/
 
 
 }

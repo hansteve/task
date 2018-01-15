@@ -3,6 +3,7 @@ package com.wshop.service.impl;
 import com.wshop.model.Order;
 import com.wshop.dao.OrderMapper;
 import com.wshop.service.OrderService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -16,7 +17,7 @@ import java.util.List;
 @Service
 public class OrderServiceImpl implements OrderService{
 
-    @Resource
+    @Autowired
     OrderMapper orderDAO;
 
     @Override

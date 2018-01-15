@@ -3,6 +3,7 @@ package com.wshop.service.impl;
 import com.wshop.model.User;
 import com.wshop.dao.UsersMapper;
 import com.wshop.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -16,14 +17,14 @@ import java.util.List;
 @Service
 public class UserServiceImpl implements UserService{
 
-    @Resource
+    @Autowired
     UsersMapper   usersMapper ;
 
     @Override
     public User getUserById(Integer id) {
         return usersMapper.selectByPrimaryKey(id);
     }
-
+/*
     @Override
     public User getParentUserById(long id) {
         return usersMapper.getParentUserById(id);
@@ -37,6 +38,6 @@ public class UserServiceImpl implements UserService{
     @Override
     public List<User> getTeamUser(long uid) {
         return usersMapper.getTeamUser(uid);
-    }
+    }*/
 
 }

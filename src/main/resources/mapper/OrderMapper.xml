@@ -266,4 +266,14 @@
     from hc_order
     <![CDATA[ where status >= 2 and status <=4 ]]>
   </select>
+
+  <update id="updateOrderStatus" parameterType="com.wshop.model.Order" >
+    update hc_order
+    <trim prefix="set" suffixOverrides=",">
+   <!--   <if test="orderid!=null"> orderId = #{orderid,jdbcType=VARCHAR},</if>-->
+      <if test="flag!=null">flag=#{flag,jdbcType=INTEGER},</if>
+    </trim>
+    where orderId = #{orderid,jdbcType=INTEGER}
+  </update>
+
 </mapper>

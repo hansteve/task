@@ -7,21 +7,21 @@ import java.math.BigDecimal;
 
 @Mapper
 public interface MarketValueMapper {
-    int deleteByPrimaryKey(Integer id);
+  //  int deleteByPrimaryKey(Integer id);
 
     int insert(MarketValue record);
 
-    int insertSelective(MarketValue record);
+ //   int insertSelective(MarketValue record);
 
-    MarketValue selectByPrimaryKey(Long id);
+    MarketValue selectByPrimaryKey(Integer id);
 
-    int updateByPrimaryKeySelective(MarketValue record);
+  //  int updateByPrimaryKeySelective(MarketValue record);
 
-    int updateByPrimaryKey(MarketValue record);
+   // int updateByPrimaryKey(MarketValue record);
 
-    void  updateMarketValueByUser(long uid,BigDecimal money);
+    void  updateMarketValueByUser(int uid,BigDecimal money);
 
-    void updateTeamMarketValueByUser(long uid, BigDecimal team_money);
+    void updateTeamMarketValueByUser(int uid, BigDecimal team_money);
 
-    MarketValue getNowMarketValueByUser(long uid);
+    MarketValue getNowMarketValueByUser(int uid);
 }

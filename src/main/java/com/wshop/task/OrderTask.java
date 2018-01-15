@@ -37,10 +37,11 @@ public class OrderTask {
     MarketRateService marketRateService;
 
     //订单自动自动计算 ： 0-24点 每五分钟执行一次
-    @Scheduled(cron="0 0/5 * * * ?")
+    @Scheduled(cron="0 0/2 * * * ?")
     protected void execute(){
 
         try {
+            logger.info("订单定时任务...");
             //获取当月支付的未处理订单
             List<Order> orders =  orderService.getOrderByMonth();
             DecimalFormat df   = new DecimalFormat("######0.00");

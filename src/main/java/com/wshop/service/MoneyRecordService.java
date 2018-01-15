@@ -10,7 +10,7 @@ public interface MoneyRecordService {
 
    public void addMoneyRecord(MoneyRecord moneyRecord);
 
-   public void deleteMoneyRecord(MoneyRecord moneyRecord);
+  // public void deleteMoneyRecord(MoneyRecord moneyRecord);
 
 
 }
