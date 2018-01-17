@@ -17,9 +17,9 @@ import java.text.DecimalFormat;
 import java.util.List;
 
 @Component
-public class OrderTask {
+public class OrderDayTask {
 
-    private static final Logger logger = LoggerFactory.getLogger(OrderTask.class);
+    private static final Logger logger = LoggerFactory.getLogger(OrderDayTask.class);
 
     @Autowired
     MoneyRecordService moneyRecordService;
@@ -148,6 +148,12 @@ public class OrderTask {
         marketValue.setYear(DateUtil.getNowYear());
         marketValue.setMonth(DateUtil.getNowMonth());
         marketValue.setMarket(money);
+        marketValue.setTeamMarket(new BigDecimal(0));
+        marketValue.setPersonMoney(new BigDecimal(0));
+        marketValue.setTeamMoney(new BigDecimal(0));
+        marketValue.setLeaderMoney(new BigDecimal(0));
+        marketValue.setTotalMoney(new BigDecimal(0));
+        marketValue.setStatus(0);
         marketValue.setAddTime(DateUtil.getDate());
         marketValueService.addMarketValueByUser(marketValue);
     }

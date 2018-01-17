@@ -1,14 +1,16 @@
-package com.wshop.app.web.Trigger;
+package com.wshop.task;
 
-import com.wshop.app.bo.*;
-import com.wshop.app.service.*;
-import com.wshop.app.util.DateUtil;
+import com.wshop.model.*;
+import com.wshop.service.*;
+import com.wshop.util.DateUtil;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -17,8 +19,9 @@ import java.util.Map;
  * Time: 下午3:46
  * To change this template use File | Settings | File Templates.
  */
-public class MonthCountJob {
-    private static Logger logger = Logger.getLogger(DayMoneyCountJob.class);
+@Component
+public class MonthTask {
+    private static Logger logger = Logger.getLogger(MonthTask.class);
 
     @Autowired
     MoneyRecordService moneyRecordService;
@@ -35,6 +38,8 @@ public class MonthCountJob {
     @Autowired
     MarketRateService marketRateService;
 
+    //订单自动自动计算 ： 0-24点 每五分钟执行一次
+    @Scheduled(cron="0 0/5 * * * ?")
     protected void execute(){
 
         try {
@@ -48,10 +53,10 @@ public class MonthCountJob {
             for(MarketValue marketValue:marketValues){
 
                 double myMoney = 0 ;
-                if(marketValue.getMarket()>0)  {
-                    MarketRate marketRate = getPersonalMarketRate(marketValue.getMid(),marketValue.getMarket());
+                if( Double.valueOf(marketValue.getMarket().doubleValue()) > 0)  {
+                    MarketRate marketRate = getPersonalMarketRate(marketValue.getMid(),marketValue.getMarket().doubleValue());
                     if(marketRate !=null ){
-                    myMoney = marketValue.getMarket() * marketRate.getPercent();
+                    myMoney = marketValue.getMarket().doubleValue() * marketRate.getPercent().doubleValue();
                     df.format(myMoney);
 
                     //-- 个人提成增加
@@ -89,19 +94,19 @@ public class MonthCountJob {
 
     }
 
-    private void getTotalMoney(long id){
-        MarketValue marketValue =marketValueService.getMarketValueById(id);
+    private void getTotalMoney(int id){
+        MarketValue marketValue = marketValueService.getMarketValueById(id);
         double countMoney = 0;
-        countMoney  = marketValue.getPerson_money()+marketValue.getTeam_money() +marketValue.getLeader_money();
+        countMoney  = marketValue.getPersonMoney().doubleValue()+marketValue.getTotalMoney().doubleValue() +marketValue.getLeaderMoney().doubleValue();
         marketValueService.updatePersonMoneyById(id,countMoney);
         marketValueService.updateMarketValueStatus(id,4);
-        addMoneyRecord(id,countMoney,5,"","","+","个人总计提成");
+        addMoneyRecord(id,new BigDecimal(countMoney),5,"","","+","个人总计提成");
     }
     /**
      * 团队提成计算
      * @param uid
      */
-    private void getTeamMarket(long uid){
+    private void getTeamMarket(int uid){
         List<MarketValue> userMarkets = marketValueService.getUserMarketValue(uid,DateUtil.getNowYear(),DateUtil.getBeforeMonth());
         MarketValue myMarkeValue = marketValueService.getMarketValueByUser(uid,DateUtil.getNowYear(),DateUtil.getBeforeMonth());
         if(userMarkets != null && userMarkets.size() > 0){
@@ -109,34 +114,34 @@ public class MonthCountJob {
 
             for (MarketValue userMarket : userMarkets) {
 
-                countTeamMarket  = countTeamMarket + userMarket.getTeam_market();
+                countTeamMarket  = countTeamMarket + userMarket.getTeamMarket().doubleValue();
 
-                MarketRate marketRate1 = getPersonalMarketRate(0,userMarket.getTeam_market());
+                MarketRate marketRate1 = getPersonalMarketRate(0,userMarket.getTeamMarket().doubleValue());
                 double  pushMoney = 0;
                 if(marketRate1 != null ){
-                    pushMoney  = marketRate1.getPercent() * userMarket.getTeam_market();
+                    pushMoney  = marketRate1.getPercent().doubleValue() * userMarket.getTeamMarket().doubleValue();
                 }
               //  logger.info("pushMoney: " + pushMoney);
                 countTeamPushMoney = countTeamPushMoney + pushMoney;
               //  logger.info("countTeamPushMoney: " + countTeamPushMoney);
                 //计算满足条件的数量
-                if(userMarket.getTeam_market() >= 50000){
+                if(userMarket.getTeamMarket().doubleValue() >= 50000){
                     leaderCount++;
                 }
 
             }
 
             //个人业绩 和小组业绩相加
-            countTeamMarket = countTeamMarket + myMarkeValue.getMarket();
-            countTeamPushMoney = countTeamPushMoney + myMarkeValue.getPerson_money();
+            countTeamMarket = countTeamMarket + myMarkeValue.getMarket().doubleValue();
+            countTeamPushMoney = countTeamPushMoney + myMarkeValue.getPersonMoney().doubleValue();
 
-            if(myMarkeValue.getMarket() >= 50000){
+            if(myMarkeValue.getMarket().doubleValue() >= 50000){
                 leaderCount++;
             }
 
             MarketRate marketRate = getPersonalMarketRate(0,countTeamMarket);
             if(marketRate != null ){
-                countPushMoney = countTeamMarket * marketRate.getPercent();
+                countPushMoney = countTeamMarket * marketRate.getPercent().doubleValue();
                // logger.info("countPushMoney: " + countPushMoney +" = countTeamMarket:" + countTeamMarket + " * marketRate:"+marketRate.getPercent() );
                // logger.info("countTeamPushMoney: " + countTeamPushMoney );
 
@@ -173,13 +178,13 @@ public class MonthCountJob {
      * @param username
      * @param orderId
      */
-    private void leaderPushMoney(long uid,double money,String username,String orderId){
+    private void leaderPushMoney(int uid,double money,String username,String orderId){
 
         if(money != 0){
             marketValueService.updateLeaderMoneyByUser(uid,money,DateUtil.getNowYear(),DateUtil.getBeforeMonth());
         }
         //-- 团队业绩增加
-        addMoneyRecord(uid,money,4,username,orderId,"+","团队领导奖励提成");
+        addMoneyRecord(uid,new BigDecimal(money),4,username,orderId,"+","团队领导奖励提成");
     }
 
     /**
@@ -189,13 +194,13 @@ public class MonthCountJob {
      * @param username
      * @param orderId
      */
-    private void teamPushMoney(long uid,double money,String username,String orderId){
+    private void teamPushMoney(int uid,double money,String username,String orderId){
 
         if(money != 0){
             marketValueService.updateTeamMoneyByUser(uid,money,DateUtil.getNowYear(),DateUtil.getBeforeMonth());
         }
         //-- 团队业绩增加
-        addMoneyRecord(uid,money,3,username,orderId,"+","团队提成");
+        addMoneyRecord(uid,new BigDecimal(money),3,username,orderId,"+","团队提成");
     }
 
     /**
@@ -205,13 +210,13 @@ public class MonthCountJob {
      * @param username
      * @param orderId
      */
-    private void personalPushMoney(long uid,double money,String username,String orderId){
+    private void personalPushMoney(int uid,double money,String username,String orderId){
 
         if(money != 0){
             marketValueService.updatePersonMoneyByUser(uid,money,DateUtil.getNowYear(),DateUtil.getBeforeMonth());
         }
         //-- 个人业绩增加
-        addMoneyRecord(uid,money,2,username,orderId,"+","个人提成");
+        addMoneyRecord(uid,new BigDecimal(money),2,username,orderId,"+","个人提成");
     }
     /**
      * 个人提层费率
@@ -219,7 +224,7 @@ public class MonthCountJob {
      * @param money
      * @return
      */
-    private MarketRate getPersonalMarketRate(long mid,double money){
+    private MarketRate getPersonalMarketRate(int mid,double money){
 
         List<MarketRate>  marketRates = marketRateService.getMarketRateByUser(mid);
         if(marketRates.size() == 0){
@@ -228,11 +233,11 @@ public class MonthCountJob {
 
         for(MarketRate marketRate:marketRates){
 
-              if(marketRate.getPerformance_from() <= money && marketRate.getPerformance_to() > money){
+              if(marketRate.getPerformanceFrom().doubleValue() <= money && marketRate.getPerformanceTo().doubleValue() > money){
                  return  marketRate;
               }
 
-             if(marketRate.getPerformance_to() == 0 && marketRate.getPerformance_from() <= money){
+             if(marketRate.getPerformanceTo().doubleValue() == 0 && marketRate.getPerformanceFrom().doubleValue() <= money){
                return  marketRate;
              }
 
@@ -251,19 +256,19 @@ public class MonthCountJob {
      * @param change_flag
      * @param remark
      */
-    private void addMoneyRecord(long uid,double money,int type,String username,String orderId,String change_flag,String remark){
+    private void addMoneyRecord(int uid,BigDecimal money,int type,String username,String orderId,String change_flag,String remark){
         DecimalFormat df   = new DecimalFormat("######0.00");
         df.format(money);
 
         MoneyRecord moneyRecord = new MoneyRecord();
         moneyRecord.setUid(uid);
-        moneyRecord.setUser_name(username);
-        moneyRecord.setOrderId(orderId);
-        moneyRecord.setChange_flag(change_flag);
+        moneyRecord.setUserName(username);
+        moneyRecord.setOrderid(orderId);
+        moneyRecord.setChangeFlag(change_flag);
         moneyRecord.setType(type);
         moneyRecord.setMoney(money);
         moneyRecord.setRemark(remark);
-        moneyRecord.setAdd_time(DateUtil.getSysDate());
+        moneyRecord.setAddTime(DateUtil.getDate());
         moneyRecordService.addMoneyRecord(moneyRecord);
     }
 

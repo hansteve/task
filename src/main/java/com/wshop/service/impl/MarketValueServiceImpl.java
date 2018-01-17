@@ -23,10 +23,14 @@ public class MarketValueServiceImpl implements MarketValueService{
     @Autowired
     MarketValueMapper marketValueDAO;
 
-  /*  @Override
+    @Override
     public List<MarketValue> getBeforeMarketValueAll(long year,long month,int status) {
-       return   marketValueDAO.getBeforeMarketValueAll(year,month,status);
-    }*/
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("year", year);
+        map.put("month", month);
+        map.put("status", status);
+       return   marketValueDAO.getBeforeMarketValueAll(map);
+    }
 
     @Override
     public void updateMarketValueByUser(int uid,BigDecimal market_money,long year,long month) {
@@ -48,53 +52,82 @@ public class MarketValueServiceImpl implements MarketValueService{
         marketValueDAO.updateTeamMarketValueByUser(map);
     }
 
-   /* @Override
+    @Override
     public void updatePersonMoneyByUser(long uid,double person_money,long year,long month) {
-        marketValueDAO.updatePersonMoneyByUser(uid, person_money, year, month);
-    }*/
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("uid", uid);
+        map.put("person_money", person_money);
+        map.put("year", year);
+        map.put("month", month);
+        marketValueDAO.updatePersonMoneyByUser(map);
+    }
 
- /*   @Override
+   @Override
     public void updateTeamMoneyByUser(long uid,double team_money,long year,long month) {
-        marketValueDAO.updateTeamMoneyByUser(uid, team_money, year, month);
+       Map<String, Object> map = new HashMap<String, Object>();
+       map.put("uid", uid);
+       map.put("team_money", team_money);
+       map.put("year", year);
+       map.put("month", month);
+       marketValueDAO.updateTeamMoneyByUser(map);
     }
 
     @Override
     public void updateLeaderMoneyByUser(long uid,double leader_money,long year,long month) {
-        marketValueDAO.updateLeaderMoneyByUser(uid, leader_money, year, month);
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("uid", uid);
+        map.put("leader_money", leader_money);
+        map.put("year", year);
+        map.put("month", month);
+        marketValueDAO.updateLeaderMoneyByUser(map);
     }
 
     @Override
     public void updateMarketValueStatus(long id, int status) {
-        marketValueDAO.updateMarketValueStatus(id,status);
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("id", id);
+        map.put("status", status);
+        marketValueDAO.updateMarketValueStatus(map);
     }
-*/
+
     @Override
     public void addMarketValueByUser(MarketValue marketValue) {
       marketValueDAO.insert(marketValue);
     }
 
-/*    @Override
+    @Override
     public MarketValue getMarketValueByUser(long uid, int year, int month) {
-        return marketValueDAO.getMarketValueByUser(uid,year,month);
-    }*/
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("uid", uid);
+        map.put("year", year);
+        map.put("month", month);
+        return marketValueDAO.getMarketValueByUser(map);
+    }
 
     @Override
     public MarketValue getNowMarketValueByUser(int uid) {
         return marketValueDAO.getNowMarketValueByUser(uid);
     }
 
-   /* @Override
+    @Override
     public List<MarketValue> getUserMarketValue(long uid,long year,long month) {
-        return marketValueDAO.getUserMarketValue(uid,year,month);
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("uid", uid);
+        map.put("year", year);
+        map.put("month", month);
+        return marketValueDAO.getUserMarketValue(map);
     }
 
     @Override
     public void updatePersonMoneyById(long id,double total_money){
-          marketValueDAO.updatePersonMoneyById(id,total_money);
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("id", id);
+        map.put("total_money", total_money);
+        marketValueDAO.updatePersonMoneyById(map);
     }
 
     @Override
     public MarketValue getMarketValueById(long id){
         return marketValueDAO.selectByPrimaryKey(id);
-    }*/
+    }
 }

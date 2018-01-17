@@ -14,29 +14,29 @@ import java.util.List;
  */
 public interface MarketValueService {
 
- //   public List<MarketValue> getBeforeMarketValueAll(long year, long month, int status);
+    public List<MarketValue> getBeforeMarketValueAll(long year, long month, int status);
 
     public void updateMarketValueByUser(int uid, BigDecimal money, long year, long month);
 
     public void updateTeamMarketValueByUser(int uid, BigDecimal team_money, long year, long month);
 
-/*    public void updatePersonMoneyByUser(long uid, double person_money, long year, long month);
+    public void updatePersonMoneyByUser(long uid, double person_money, long year, long month);
 
     public void updateTeamMoneyByUser(long uid, double team_money, long year, long month);
 
     public void updateLeaderMoneyByUser(long uid, double leader_money, long year, long month);
 
-    public void updateMarketValueStatus(long id, int status);*/
+    public void updateMarketValueStatus(long id, int status);
 
     public void addMarketValueByUser(MarketValue marketValue);
 
-  //  public MarketValue getMarketValueByUser(long uid, int year, int month);
+    public MarketValue getMarketValueByUser(long uid, int year, int month);
 
     public MarketValue getNowMarketValueByUser(int uid);
 
- //   public List<MarketValue> getUserMarketValue(long uid, long year, long month);
+    public List<MarketValue> getUserMarketValue(long uid, long year, long month);
 
-  //  public void updatePersonMoneyById(long id, double total_money);
+    public void updatePersonMoneyById(long id, double total_money);
 
-  //  public MarketValue getMarketValueById(long id);
+    public MarketValue getMarketValueById(long id);
 }

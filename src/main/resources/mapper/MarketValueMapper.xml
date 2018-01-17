@@ -42,133 +42,7 @@
       #{leaderMoney,jdbcType=DECIMAL}, #{totalMoney,jdbcType=DECIMAL}, #{status,jdbcType=INTEGER}, 
       #{addTime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.wshop.model.MarketValue" >
-    insert into hc_market_value
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
-      <if test="mid != null" >
-        mid,
-      </if>
-      <if test="uid != null" >
-        uid,
-      </if>
-      <if test="year != null" >
-        year,
-      </if>
-      <if test="month != null" >
-        month,
-      </if>
-      <if test="market != null" >
-        market,
-      </if>
-      <if test="teamMarket != null" >
-        team_market,
-      </if>
-      <if test="personMoney != null" >
-        person_money,
-      </if>
-      <if test="teamMoney != null" >
-        team_money,
-      </if>
-      <if test="leaderMoney != null" >
-        leader_money,
-      </if>
-      <if test="totalMoney != null" >
-        total_money,
-      </if>
-      <if test="status != null" >
-        status,
-      </if>
-      <if test="addTime != null" >
-        add_time,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=INTEGER},
-      </if>
-      <if test="mid != null" >
-        #{mid,jdbcType=INTEGER},
-      </if>
-      <if test="uid != null" >
-        #{uid,jdbcType=INTEGER},
-      </if>
-      <if test="year != null" >
-        #{year,jdbcType=INTEGER},
-      </if>
-      <if test="month != null" >
-        #{month,jdbcType=INTEGER},
-      </if>
-      <if test="market != null" >
-        #{market,jdbcType=DECIMAL},
-      </if>
-      <if test="teamMarket != null" >
-        #{teamMarket,jdbcType=DECIMAL},
-      </if>
-      <if test="personMoney != null" >
-        #{personMoney,jdbcType=DECIMAL},
-      </if>
-      <if test="teamMoney != null" >
-        #{teamMoney,jdbcType=DECIMAL},
-      </if>
-      <if test="leaderMoney != null" >
-        #{leaderMoney,jdbcType=DECIMAL},
-      </if>
-      <if test="totalMoney != null" >
-        #{totalMoney,jdbcType=DECIMAL},
-      </if>
-      <if test="status != null" >
-        #{status,jdbcType=INTEGER},
-      </if>
-      <if test="addTime != null" >
-        #{addTime,jdbcType=TIMESTAMP},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.wshop.model.MarketValue" >
-    update hc_market_value
-    <set >
-      <if test="mid != null" >
-        mid = #{mid,jdbcType=INTEGER},
-      </if>
-      <if test="uid != null" >
-        uid = #{uid,jdbcType=INTEGER},
-      </if>
-      <if test="year != null" >
-        year = #{year,jdbcType=INTEGER},
-      </if>
-      <if test="month != null" >
-        month = #{month,jdbcType=INTEGER},
-      </if>
-      <if test="market != null" >
-        market = #{market,jdbcType=DECIMAL},
-      </if>
-      <if test="teamMarket != null" >
-        team_market = #{teamMarket,jdbcType=DECIMAL},
-      </if>
-      <if test="personMoney != null" >
-        person_money = #{personMoney,jdbcType=DECIMAL},
-      </if>
-      <if test="teamMoney != null" >
-        team_money = #{teamMoney,jdbcType=DECIMAL},
-      </if>
-      <if test="leaderMoney != null" >
-        leader_money = #{leaderMoney,jdbcType=DECIMAL},
-      </if>
-      <if test="totalMoney != null" >
-        total_money = #{totalMoney,jdbcType=DECIMAL},
-      </if>
-      <if test="status != null" >
-        status = #{status,jdbcType=INTEGER},
-      </if>
-      <if test="addTime != null" >
-        add_time = #{addTime,jdbcType=TIMESTAMP},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
+
   <update id="updateByPrimaryKey" parameterType="com.wshop.model.MarketValue" >
     update hc_market_value
     set mid = #{mid,jdbcType=INTEGER},
@@ -188,13 +62,13 @@
 
   <update id="updateMarketValueByUser" parameterType="java.util.Map">
     update hc_market_value
-    set  market = #{market_money,jdbcType=DECIMAL}
+    set  market = market + #{market_money,jdbcType=DECIMAL}
     where uid = #{uid,jdbcType=INTEGER} AND year = #{year,jdbcType=INTEGER} AND month=#{month,jdbcType=INTEGER}
   </update>
 
   <update id="updateTeamMarketValueByUser" parameterType="java.util.Map" >
     update hc_market_value
-    set  team_market = #{team_money,jdbcType=DECIMAL}
+    set  team_market = team_market + #{team_money,jdbcType=DECIMAL}
     where uid = #{uid,jdbcType=INTEGER}  AND year = #{year,jdbcType=INTEGER} AND month=#{month,jdbcType=INTEGER}
   </update>
 
@@ -202,6 +76,57 @@
     select
     <include refid="Base_Column_List" />
     from hc_market_value
-    where uid = #{uid,jdbcType=INTEGER}
+    where uid = #{uid,jdbcType=INTEGER} and year = year(curdate()) and month = month(curdate())
   </select>
+
+  <select id="getBeforeMarketValueAll" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select
+    <include refid="Base_Column_List" />
+    from hc_market_value
+    where year = #{year,jdbcType=INTEGER} and month = #{month,jdbcType=INTEGER} and status  = #{status,jdbcType=INTEGER}
+  </select>
+
+  <update id="updatePersonMoneyByUser" parameterType="java.util.Map" >
+    update hc_market_value
+    set  person_money = person_money + #{person_money,jdbcType=DECIMAL}
+    where uid = #{uid,jdbcType=INTEGER}  AND year = #{year,jdbcType=INTEGER} AND month=#{month,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateTeamMoneyByUser" parameterType="java.util.Map" >
+    update hc_market_value
+    set  team_money = team_money + #{team_money,jdbcType=DECIMAL}
+    where uid = #{uid,jdbcType=INTEGER}  AND year = #{year,jdbcType=INTEGER} AND month=#{month,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateLeaderMoneyByUser" parameterType="java.util.Map" >
+    update hc_market_value
+    set  leader_money = leader_money + #{leader_money,jdbcType=DECIMAL}
+    where uid = #{uid,jdbcType=INTEGER}  AND year = #{year,jdbcType=INTEGER} AND month=#{month,jdbcType=INTEGER}
+  </update>
+
+  <update id="updateMarketValueStatus" parameterType="java.util.Map" >
+    update hc_market_value
+    set  status = #{status,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="getMarketValueByUser" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select
+    <include refid="Base_Column_List" />
+    from hc_market_value
+    where uid =#{uid,jdbcType=INTEGER} year = #{year,jdbcType=INTEGER} and month = #{month,jdbcType=INTEGER}
+  </select>
+
+  <select id="getUserMarketValue" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select
+    a.* from hc_market_value a  left outer join  hc_users  b  on a.uid = b.id  where b.parentId = #{uid,jdbcType=INTEGER}
+    and year = #{year,jdbcType=INTEGER} and month = #{month,jdbcType=INTEGER}
+  </select>
+
+  <update id="updatePersonMoneyById" parameterType="java.util.Map" >
+    update hc_market_value
+    set  total_money = #{total_money,jdbcType=DECIMAL}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
 </mapper>
