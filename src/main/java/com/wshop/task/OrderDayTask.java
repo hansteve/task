@@ -37,11 +37,11 @@ public class OrderTask {
     MarketRateService marketRateService;
 
     //订单自动自动计算 ： 0-24点 每五分钟执行一次
-    @Scheduled(cron="0 0/2 * * * ?")
+    @Scheduled(cron="0 0/5 * * * ?")
     protected void execute(){
 
         try {
-            logger.info("订单定时任务...");
+            logger.info("订单每天定时任务...");
             //获取当月支付的未处理订单
             List<Order> orders =  orderService.getOrderByMonth();
             DecimalFormat df   = new DecimalFormat("######0.00");
@@ -52,11 +52,13 @@ public class OrderTask {
 
                     if(user.getType() == 2 ){
 
+                        BigDecimal market_money = order.getOrderprice().subtract(new BigDecimal(1000));
+
                         //1--个人业绩计算
-                        personalMoney(user.getMid(),user.getId(),order.getOrderprice(),user.getNickname(),order.getOrderid());
+                        personalMoney(user.getMid(),user.getId(),market_money,user.getNickname(),order.getOrderid());
 
                         //--团队业绩计算
-                        groupMoney(user.getMid(),user.getId(),user.getParentid(),order.getOrderprice(),user.getNickname(),order.getOrderid());
+                        groupMoney(user.getMid(),user.getId(),user.getParentid(),market_money,user.getNickname(),order.getOrderid());
 
                     }
 
